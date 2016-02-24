@@ -36,6 +36,12 @@
 		4EF16F9819D255030076AFCB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF16F9519D255030076AFCB /* ViewController.swift */; };
 		4EF16F9B19D2550D0076AFCB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF16F9A19D2550D0076AFCB /* AppDelegate.swift */; };
 		4EF16F9F19D2552E0076AFCB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EF16F9D19D2552E0076AFCB /* Main.storyboard */; };
+		507BC1511C631BBD009C3ED1 /* Aurebesh.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 507BC1501C631BBD009C3ED1 /* Aurebesh.ttf */; };
+		507BC1531C631BF7009C3ED1 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507BC1521C631BF7009C3ED1 /* Fonts.swift */; };
+		507BC1541C631BF7009C3ED1 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507BC1521C631BF7009C3ED1 /* Fonts.swift */; };
+		507BC1551C631BFC009C3ED1 /* Aurebesh.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 507BC1501C631BBD009C3ED1 /* Aurebesh.ttf */; };
+		507BC1571C63315F009C3ED1 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507BC1561C63315F009C3ED1 /* Colors.swift */; };
+		507BC1581C63315F009C3ED1 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 507BC1561C63315F009C3ED1 /* Colors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,6 +134,9 @@
 		4EF16F9519D255030076AFCB /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4EF16F9A19D2550D0076AFCB /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4EF16F9E19D2552E0076AFCB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
+		507BC1501C631BBD009C3ED1 /* Aurebesh.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aurebesh.ttf; sourceTree = "<group>"; };
+		507BC1521C631BF7009C3ED1 /* Fonts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		507BC1561C63315F009C3ED1 /* Colors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -264,6 +273,9 @@
 		4E807DBA19461DC700D875D1 /* Keyboard */ = {
 			isa = PBXGroup;
 			children = (
+				507BC1561C63315F009C3ED1 /* Colors.swift */,
+				507BC1521C631BF7009C3ED1 /* Fonts.swift */,
+				507BC1501C631BBD009C3ED1 /* Aurebesh.ttf */,
 				4E6AEE5219D2488B00931E8F /* Controller */,
 				4E6AEE5019D2486900931E8F /* Model */,
 				4E6AEE4F19D2484B00931E8F /* Views */,
@@ -386,9 +398,9 @@
 		4E807D8B19461D9000D875D1 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftMigration = 0710;
-				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0710;
+				LastSwiftMigration = 0720;
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = Apple;
 				TargetAttributes = {
 					4E807D9219461D9000D875D1 = {
@@ -430,6 +442,7 @@
 				4EF16F9619D255030076AFCB /* Images.xcassets in Resources */,
 				4EF16F9F19D2552E0076AFCB /* Main.storyboard in Resources */,
 				4EF16F9119D254E00076AFCB /* Background.jpg in Resources */,
+				507BC1551C631BFC009C3ED1 /* Aurebesh.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,6 +452,7 @@
 			files = (
 				4E52A6DA1A06C198006A08CE /* DefaultSettings.xib in Resources */,
 				4E52A6D61A06BADA006A08CE /* Media.xcassets in Resources */,
+				507BC1511C631BBD009C3ED1 /* Aurebesh.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,6 +471,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4EF16F9B19D2550D0076AFCB /* AppDelegate.swift in Sources */,
+				507BC1571C63315F009C3ED1 /* Colors.swift in Sources */,
+				507BC1531C631BF7009C3ED1 /* Fonts.swift in Sources */,
 				4EF16F9819D255030076AFCB /* ViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -477,10 +493,12 @@
 				4EE7599B19F75A0D00B4E6ED /* Utilities.swift in Sources */,
 				4EEFD78B19E0DF15004D4974 /* Shapes.swift in Sources */,
 				4ECBD90219F16DC7004FA2A3 /* DefaultKeyboard.swift in Sources */,
+				507BC1581C63315F009C3ED1 /* Colors.swift in Sources */,
 				4E3B5A941A0654A8003366F6 /* KeyboardInputTraits.swift in Sources */,
 				4E52A6D81A06C16C006A08CE /* DefaultSettings.swift in Sources */,
 				4E72C96819E04A7A00DFDDB0 /* Catboard.swift in Sources */,
 				4E60A13E1979FB2E00854CC8 /* DirectionEnum.swift in Sources */,
+				507BC1541C631BF7009C3ED1 /* Fonts.swift in Sources */,
 				4EC2A46D19DF811E00F789E1 /* KeyboardViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

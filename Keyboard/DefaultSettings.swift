@@ -3,7 +3,7 @@
 //  TastyImitationKeyboard
 //
 //  Created by Alexei Baboulevitch on 11/2/14.
-//  Copyright (c) 2014 Alexei Baboulevitch ("Archagon"). All rights reserved.
+//  Copyright (c) 2014 Apple. All rights reserved.
 //
 
 import UIKit
@@ -157,11 +157,13 @@ class DefaultSettings: ExtraView, UITableViewDataSource, UITableViewDelegate {
             
             if let visibleCells = self.tableView?.visibleCells {
                 for cell in visibleCells {
-                    cell.backgroundColor = cellBackgroundColorDark
-                    let label = cell.viewWithTag(2) as? UILabel
-                    label?.textColor = cellLabelColorDark
-                    let longLabel = cell.viewWithTag(3) as? UITextView
-                    longLabel?.textColor = cellLongLabelColorDark
+                    if let cell = cell as? UITableViewCell {
+                        cell.backgroundColor = cellBackgroundColorDark
+                        let label = cell.viewWithTag(2) as? UILabel
+                        label?.textColor = cellLabelColorDark
+                        let longLabel = cell.viewWithTag(3) as? UITextView
+                        longLabel?.textColor = cellLongLabelColorDark
+                    }
                 }
             }
         }
@@ -173,11 +175,13 @@ class DefaultSettings: ExtraView, UITableViewDataSource, UITableViewDelegate {
             
             if let visibleCells = self.tableView?.visibleCells {
                 for cell in visibleCells {
-                    cell.backgroundColor = cellBackgroundColorLight
-                    let label = cell.viewWithTag(2) as? UILabel
-                    label?.textColor = cellLabelColorLight
-                    let longLabel = cell.viewWithTag(3) as? UITextView
-                    longLabel?.textColor = cellLongLabelColorLight
+                    if let cell = cell as? UITableViewCell {
+                        cell.backgroundColor = cellBackgroundColorLight
+                        let label = cell.viewWithTag(2) as? UILabel
+                        label?.textColor = cellLabelColorLight
+                        let longLabel = cell.viewWithTag(3) as? UITextView
+                        longLabel?.textColor = cellLongLabelColorLight
+                    }
                 }
             }
         }

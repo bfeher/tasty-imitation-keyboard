@@ -3,7 +3,7 @@
 //  TransliteratingKeyboard
 //
 //  Created by Alexei Baboulevitch on 7/10/14.
-//  Copyright (c) 2014 Alexei Baboulevitch ("Archagon"). All rights reserved.
+//  Copyright (c) 2014 Apple. All rights reserved.
 //
 
 func defaultKeyboard() -> Keyboard {
@@ -41,8 +41,8 @@ func defaultKeyboard() -> Keyboard {
     let keyboardChange = Key(.KeyboardChange)
     defaultKeyboard.addKey(keyboardChange, row: 3, page: 0)
     
-    let settings = Key(.Settings)
-    defaultKeyboard.addKey(settings, row: 3, page: 0)
+//    let settings = Key(.Settings)
+//    defaultKeyboard.addKey(settings, row: 3, page: 0)
     
     let space = Key(.Space)
     space.uppercaseKeyCap = "space"
@@ -88,7 +88,7 @@ func defaultKeyboard() -> Keyboard {
     
     defaultKeyboard.addKey(Key(keyboardChange), row: 3, page: 1)
     
-    defaultKeyboard.addKey(Key(settings), row: 3, page: 1)
+//    defaultKeyboard.addKey(Key(settings), row: 3, page: 1)
     
     defaultKeyboard.addKey(Key(space), row: 3, page: 1)
     
@@ -100,7 +100,7 @@ func defaultKeyboard() -> Keyboard {
         defaultKeyboard.addKey(keyModel, row: 0, page: 2)
     }
     
-    for key in ["_", "\\", "|", "~", "<", ">", "€", "£", "¥", "•"] {
+    for key in ["_", "\\", "æ", "ç", "ë", "ñ", "ø", "ß", "<", ">"] {
         let keyModel = Key(.SpecialCharacter)
         keyModel.setLetter(key)
         defaultKeyboard.addKey(keyModel, row: 1, page: 2)
@@ -120,7 +120,7 @@ func defaultKeyboard() -> Keyboard {
     
     defaultKeyboard.addKey(Key(keyboardChange), row: 3, page: 2)
     
-    defaultKeyboard.addKey(Key(settings), row: 3, page: 2)
+//    defaultKeyboard.addKey(Key(settings), row: 3, page: 2)
     
     defaultKeyboard.addKey(Key(space), row: 3, page: 2)
     

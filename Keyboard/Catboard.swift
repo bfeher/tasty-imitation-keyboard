@@ -3,7 +3,7 @@
 //  TransliteratingKeyboard
 //
 //  Created by Alexei Baboulevitch on 9/24/14.
-//  Copyright (c) 2014 Alexei Baboulevitch ("Archagon"). All rights reserved.
+//  Copyright (c) 2014 Apple. All rights reserved.
 //
 
 import UIKit
@@ -29,49 +29,50 @@ class Catboard: KeyboardViewController {
     }
     
     override func keyPressed(key: Key) {
-        let textDocumentProxy = self.textDocumentProxy
-        
-        let keyOutput = key.outputForCase(self.shiftState.uppercase())
-        
-        if !NSUserDefaults.standardUserDefaults().boolForKey(kCatTypeEnabled) {
-            textDocumentProxy.insertText(keyOutput)
-            return
-        }
-        
-        if key.type == .Character || key.type == .SpecialCharacter {
-            if let context = textDocumentProxy.documentContextBeforeInput {
-                if context.characters.count < 2 {
-                    textDocumentProxy.insertText(keyOutput)
-                    return
-                }
-                
-                var index = context.endIndex
-                
-                index = index.predecessor()
-                if context[index] != " " {
-                    textDocumentProxy.insertText(keyOutput)
-                    return
-                }
-                
-                index = index.predecessor()
-                if context[index] == " " {
-                    textDocumentProxy.insertText(keyOutput)
-                    return
-                }
-
-                textDocumentProxy.insertText("\(randomCat())")
-                textDocumentProxy.insertText(" ")
+        if let textDocumentProxy = self.textDocumentProxy as? UITextDocumentProxy {
+            let keyOutput = key.outputForCase(self.shiftState.uppercase())
+            
+            if !NSUserDefaults.standardUserDefaults().boolForKey(kCatTypeEnabled) {
                 textDocumentProxy.insertText(keyOutput)
                 return
+            }
+            
+            if key.type == .Character || key.type == .SpecialCharacter {
+                let context = textDocumentProxy.documentContextBeforeInput
+                if context != nil {
+                    if context!.characters.count < 2 {
+                        textDocumentProxy.insertText(keyOutput)
+                        return
+                    }
+                    
+                    var index = context!.endIndex
+                    
+                    index = index.predecessor()
+                    if context![index] != " " {
+                        textDocumentProxy.insertText(keyOutput)
+                        return
+                    }
+                    
+                    index = index.predecessor()
+                    if context![index] == " " {
+                        textDocumentProxy.insertText(keyOutput)
+                        return
+                    }
+
+                    textDocumentProxy.insertText("\(randomCat())")
+                    textDocumentProxy.insertText(" ")
+                    textDocumentProxy.insertText(keyOutput)
+                    return
+                }
+                else {
+                    textDocumentProxy.insertText(keyOutput)
+                    return
+                }
             }
             else {
                 textDocumentProxy.insertText(keyOutput)
                 return
             }
-        }
-        else {
-            textDocumentProxy.insertText(keyOutput)
-            return
         }
     }
     
@@ -100,7 +101,7 @@ class Catboard: KeyboardViewController {
     }
     
     func takeScreenshotDelay() {
-        NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: Selector("takeScreenshot"), userInfo: nil, repeats: false)
+        var timer = NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: Selector("takeScreenshot"), userInfo: nil, repeats: false)
     }
     
     func takeScreenshot() {
@@ -110,18 +111,15 @@ class Catboard: KeyboardViewController {
             let oldViewColor = self.view.backgroundColor
             self.view.backgroundColor = UIColor(hue: (216/360.0), saturation: 0.05, brightness: 0.86, alpha: 1)
             
-            let rect = self.view.bounds
+            var rect = self.view.bounds
             UIGraphicsBeginImageContextWithOptions(rect.size, true, 0)
             var context = UIGraphicsGetCurrentContext()
             self.view.drawViewHierarchyInRect(self.view.bounds, afterScreenUpdates: true)
-            let capturedImage = UIGraphicsGetImageFromCurrentImageContext()
+            var capturedImage = UIGraphicsGetImageFromCurrentImageContext()
             UIGraphicsEndImageContext()
             let name = (self.interfaceOrientation.isPortrait ? "Screenshot-Portrait" : "Screenshot-Landscape")
-            let imagePath = "/Users/archagon/Documents/Programming/OSX/RussianPhoneticKeyboard/External/tasty-imitation-keyboard/\(name).png"
-            
-            if let pngRep = UIImagePNGRepresentation(capturedImage) {
-                pngRep.writeToFile(imagePath, atomically: true)
-            }
+            var imagePath = "/Users/archagon/Documents/Programming/OSX/RussianPhoneticKeyboard/External/tasty-imitation-keyboard/\(name).png"
+            UIImagePNGRepresentation(capturedImage!)!.writeToFile(imagePath, atomically: true)
             
             self.view.backgroundColor = oldViewColor
         }

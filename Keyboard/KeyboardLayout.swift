@@ -3,7 +3,7 @@
 //  TransliteratingKeyboard
 //
 //  Created by Alexei Baboulevitch on 7/25/14.
-//  Copyright (c) 2014 Alexei Baboulevitch ("Archagon"). All rights reserved.
+//  Copyright (c) 2014 Apple. All rights reserved.
 //
 
 import UIKit
@@ -169,11 +169,10 @@ class GlobalColors: NSObject {
     class var lightModePopup: UIColor { get { return GlobalColors.lightModeRegularKey }}
     class var darkModePopup: UIColor { get { return UIColor.grayColor() }}
     class var darkModeSolidColorPopup: UIColor { get { return GlobalColors.darkModeSolidColorRegularKey }}
-    
     class var lightModeUnderColor: UIColor { get { return UIColor(hue: (220/360.0), saturation: 0.04, brightness: 0.56, alpha: 1) }}
     class var darkModeUnderColor: UIColor { get { return UIColor(red: CGFloat(38.6)/CGFloat(255), green: CGFloat(18)/CGFloat(255), blue: CGFloat(39.3)/CGFloat(255), alpha: 0.4) }}
-    class var lightModeTextColor: UIColor { get { return UIColor.blackColor() }}
-    class var darkModeTextColor: UIColor { get { return UIColor.whiteColor() }}
+    class var lightModeTextColor: UIColor { get { return Colors.starWarsDarkerBlue()/*UIColor.blackColor()*/ }}
+    class var darkModeTextColor: UIColor { get { return /*Colors.starWarsBlue()*/UIColor.whiteColor() }}
     class var lightModeBorderColor: UIColor { get { return UIColor(hue: (214/360.0), saturation: 0.04, brightness: 0.65, alpha: 1.0) }}
     class var darkModeBorderColor: UIColor { get { return UIColor.clearColor() }}
     
@@ -427,9 +426,11 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
             Key.KeyType.Space,
             Key.KeyType.Return:
                 key.label.adjustsFontSizeToFitWidth = true
-                key.label.font = key.label.font.fontWithSize(16)
+                key.label.font = Fonts.aurebesh(ofSize: 16)
+//                key.label.font = key.label.font.fontWithSize(16)
             default:
-                key.label.font = key.label.font.fontWithSize(22)
+                key.label.font = Fonts.aurebesh()
+//                key.label.font = key.label.font.fontWithSize(22)
             }
             
             // label inset
@@ -438,7 +439,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
             Key.KeyType.ModeChange:
                 key.labelInset = 3
             default:
-                key.labelInset = 0
+                key.labelInset = 1.5
             }
             
             // shapes
@@ -480,16 +481,22 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
                 key.shape = shiftShape
             }
             
+            var options: Int = 0
             switch shiftState {
             case .Disabled:
+                options = 0
                 key.highlighted = false
             case .Enabled:
+                options = 1
                 key.highlighted = true
             case .Locked:
+                options = 2
                 key.highlighted = true
             }
             
-            (key.shape as? ShiftShape)?.withLock = (shiftState == .Locked)
+//            (key.shape as? ShiftShape)?.withLock = (shiftState == .Locked)
+            (key.shape as? ShiftShape)?.options = options
+            print("\n\n===============================================\n(updateKeyCap:) setting options to \(options)\n===============================================\n\n")
         }
         
         self.updateKeyCapText(key, model: model, uppercase: uppercase, characterUppercase: characterUppercase)
@@ -536,9 +543,11 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
         case
         Key.KeyType.Shift:
             key.color = self.globalColors.specialKey(darkMode, solidColorMode: solidColorMode)
-            key.downColor = (darkMode ? self.globalColors.darkModeShiftKeyDown : self.globalColors.lightModeRegularKey)
+//            key.downColor = (darkMode ? self.globalColors.darkModeShiftKeyDown : self.globalColors.lightModeRegularKey)
+            key.downColor = self.globalColors.regularKey(darkMode, solidColorMode: solidColorMode)
             key.textColor = self.globalColors.darkModeTextColor
-            key.downTextColor = self.globalColors.lightModeTextColor
+//            key.downTextColor = self.globalColors.lightModeTextColor
+            key.downTextColor = (darkMode ? nil : self.globalColors.lightModeTextColor)
         case
         Key.KeyType.Backspace:
             key.color = self.globalColors.specialKey(darkMode, solidColorMode: solidColorMode)
@@ -763,8 +772,8 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
         let rowGap: CGFloat = (isLandscape ? self.layoutConstants.rowGapLandscape : self.layoutConstants.rowGapPortrait(bounds.width))
         let lastRowGap: CGFloat = (isLandscape ? rowGap : self.layoutConstants.rowGapPortraitLastRow(bounds.width))
         
-        //let flexibleEndRowM = (isLandscape ? self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthMLandscape : self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthMPortrait)
-        //let flexibleEndRowC = (isLandscape ? self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthCLandscape : self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthCPortrait)
+        let flexibleEndRowM = (isLandscape ? self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthMLandscape : self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthMPortrait)
+        let flexibleEndRowC = (isLandscape ? self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthCLandscape : self.layoutConstants.flexibleEndRowTotalWidthToKeyWidthCPortrait)
         
         let lastRowLeftSideRatio = (isLandscape ? self.layoutConstants.lastRowLandscapeFirstTwoButtonAreaWidthToKeyboardAreaWidth : self.layoutConstants.lastRowPortraitFirstTwoButtonAreaWidthToKeyboardAreaWidth)
         let lastRowRightSideRatio = (isLandscape ? self.layoutConstants.lastRowLandscapeLastButtonAreaWidthToKeyboardAreaWidth : self.layoutConstants.lastRowPortraitLastButtonAreaWidthToKeyboardAreaWidth)
@@ -860,7 +869,7 @@ class KeyboardLayout: NSObject, KeyboardKeyProtocol {
         
         var currentOrigin = frame.origin.x + sideSpace
         
-        for (_, _) in row.enumerate() {
+        for (k, key) in row.enumerate() {
             let roundedOrigin = rounded(currentOrigin)
             
             // avoiding rounding errors

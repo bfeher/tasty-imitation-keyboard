@@ -40,5 +40,9 @@
 		<key>NSExtensionPrincipalClass</key>
 		<string>${PRODUCT_MODULE_NAME}.Catboard</string>
 	</dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Aurebesh.ttf</string>
+	</array>
 </dict>
 </plist>

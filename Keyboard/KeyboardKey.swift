@@ -3,7 +3,7 @@
 //  TransliteratingKeyboard
 //
 //  Created by Alexei Baboulevitch on 6/9/14.
-//  Copyright (c) 2014 Alexei Baboulevitch ("Archagon"). All rights reserved.
+//  Copyright (c) 2014 Apple. All rights reserved.
 //
 
 import UIKit
@@ -33,7 +33,7 @@ class KeyboardKey: UIControl {
     var text: String {
         didSet {
             self.label.text = text
-            self.label.frame = CGRectMake(self.labelInset, self.labelInset, self.bounds.width - self.labelInset * 2, self.bounds.height - self.labelInset * 2)
+            self.label.frame = CGRectMake(self.labelInset, self.labelInset, self.bounds.width - self.labelInset /* 2*/, self.bounds.height - self.labelInset * 2)
             self.redrawText()
         }
     }
@@ -56,7 +56,7 @@ class KeyboardKey: UIControl {
     var labelInset: CGFloat = 0 {
         didSet {
             if oldValue != labelInset {
-                self.label.frame = CGRectMake(self.labelInset, self.labelInset, self.bounds.width - self.labelInset * 2, self.bounds.height - self.labelInset * 2)
+                self.label.frame = CGRectMake(self.labelInset, self.labelInset, self.bounds.width - self.labelInset /* 2*/, self.bounds.height - self.labelInset * 2)
             }
         }
     }
@@ -170,11 +170,13 @@ class KeyboardKey: UIControl {
             
             self.label.textAlignment = NSTextAlignment.Center
             self.label.baselineAdjustment = UIBaselineAdjustment.AlignCenters
-            self.label.font = self.label.font.fontWithSize(22)
+            self.label.font = Fonts.aurebesh()
+//            self.label.font = self.label.font.fontWithSize(22)
             self.label.adjustsFontSizeToFitWidth = true
             self.label.minimumScaleFactor = CGFloat(0.1)
             self.label.userInteractionEnabled = false
             self.label.numberOfLines = 1
+//            self.label.backgroundColor = Colors.starWarsYellow()
         }()
     }
     
@@ -206,7 +208,7 @@ class KeyboardKey: UIControl {
         CATransaction.setDisableActions(true)
         
         self.background.frame = self.bounds
-        self.label.frame = CGRectMake(self.labelInset, self.labelInset, self.bounds.width - self.labelInset * 2, self.bounds.height - self.labelInset * 2)
+        self.label.frame = CGRectMake(self.labelInset, self.labelInset, self.bounds.width - self.labelInset /* 2*/, self.bounds.height - self.labelInset * 2)
         
         self.displayView.frame = boundingBox
         self.shadowView.frame = boundingBox
@@ -247,7 +249,7 @@ class KeyboardKey: UIControl {
                 path?.applyTransform(transformFromShapeToView)
                 if path != nil { toPath.appendPath(path!) }
                 if let edgePaths = shape.edgePaths {
-                    for (_, anEdgePath) in edgePaths.enumerate() {
+                    for (e, anEdgePath) in edgePaths.enumerate() {
                         let editablePath = anEdgePath
                         editablePath.applyTransform(transformFromShapeToView)
                         toEdgePaths.appendPath(editablePath)
@@ -271,7 +273,7 @@ class KeyboardKey: UIControl {
         CATransaction.begin()
         CATransaction.setDisableActions(true)
         
-        if let _ = self.popup {
+        if let popup = self.popup {
             self.shadowLayer.shadowPath = shadowPath.CGPath
         }
         
@@ -394,7 +396,8 @@ class KeyboardKey: UIControl {
             if let delegate = self.delegate {
                 let frame = delegate.frameForPopup(self, direction: dir)
                 popup.frame = frame
-                popupLabel?.frame = popup.bounds
+                popupLabel?.frame = CGRect(x: popup.bounds.origin.x + self.labelInset, y: popup.bounds.origin.y, width: popup.bounds.size.width, height: popup.bounds.size.height)
+//                popupLabel?.frame = popup.bounds
             }
             else {
                 popup.frame = CGRectZero
@@ -436,12 +439,14 @@ class KeyboardKey: UIControl {
             let popupLabel = UILabel()
             popupLabel.textAlignment = self.label.textAlignment
             popupLabel.baselineAdjustment = self.label.baselineAdjustment
-            popupLabel.font = self.label.font.fontWithSize(22 * 2)
-            popupLabel.adjustsFontSizeToFitWidth = self.label.adjustsFontSizeToFitWidth
+            popupLabel.font = Fonts.aurebesh(ofSize: Fonts.defaultTextSize() * 1.5)
+//            popupLabel.font = self.label.font.fontWithSize(22 * 2)
+            popupLabel.adjustsFontSizeToFitWidth = false//self.label.adjustsFontSizeToFitWidth
             popupLabel.minimumScaleFactor = CGFloat(0.1)
             popupLabel.userInteractionEnabled = false
             popupLabel.numberOfLines = 1
-            popupLabel.frame = popup.bounds
+            popupLabel.frame = popup.bounds //CGRect(x: 40, y: 20, width: 14, height: 14)// CGRect(x: popup.bounds.origin.x + 20, y: popup.bounds.origin.y, width: popup.bounds.size.width, height: popup.bounds.size.height)
+//            popup.backgroundColor = Colors.starWarsYellow()
             popupLabel.text = self.label.text
             popup.addSubview(popupLabel)
             self.popupLabel = popupLabel

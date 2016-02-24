@@ -3,7 +3,7 @@
 //  TransliteratingKeyboard
 //
 //  Created by Alexei Baboulevitch on 7/19/14.
-//  Copyright (c) 2014 Alexei Baboulevitch ("Archagon"). All rights reserved.
+//  Copyright (c) 2014 Apple. All rights reserved.
 //
 
 import UIKit
@@ -55,7 +55,7 @@ class KeyboardKeyBackground: UIView, Connectable {
         arcCenters.reserveCapacity(4)
         arcStartingAngles.reserveCapacity(4)
         
-        for _ in 0..<4 {
+        for i in 0..<4 {
             startingPoints.append(CGPointZero)
             segmentPoints.append((CGPointZero, CGPointZero))
             arcCenters.append(CGPointZero)
